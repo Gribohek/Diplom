@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Модель пользователи
+model User {
+  id          Int      @id @default(autoincrement()) // Идентификатор пользователя
+  firstName   String    @map("first_name") // Имя пользователя
+  lastName    String    @map("last_name")  // Фамилия пользователя
+  middleName  String?   @map("middle_name") // Отчество пользователя (необязательное поле)
+  username    String    @unique // Логин пользователя
+  password    String // Пароль пользователя
+  role        UserRole // Роль пользователя
+  title       String?
+  score       Int? // Набранные очки (необязательное поле)
+  completed Boolean   @default(false) // Завершена ли игра
+  
+}
+
+enum UserRole {
+  CHILD
+  THERAPIST
+  ADMIN
+}
+
+
+
+
