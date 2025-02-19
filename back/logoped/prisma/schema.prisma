@@ -7,19 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Модель пользователи
 model User {
-  id          Int      @id @default(autoincrement()) // Идентификатор пользователя
-  firstName   String    @map("first_name") // Имя пользователя
-  lastName    String    @map("last_name")  // Фамилия пользователя
-  middleName  String?   @map("middle_name") // Отчество пользователя (необязательное поле)
-  username    String    @unique // Логин пользователя
-  password    String // Пароль пользователя
-  role        UserRole // Роль пользователя
-  title       String?
-  score       Int? // Набранные очки (необязательное поле)
-  completed Boolean   @default(false) // Завершена ли игра
-  
+  id        String     @id @default(cuid())
+  firstName String
+  lastName  String
+  middleName String?
+  username  String  @unique
+  password  String
+  role   UserRole
+  games     Game[]  @relation("UserGames") // Пользователь может иметь много игр
+}
+
+model Game {
+  id        String     @id @default(cuid())
+  title     String
+  score     Int?
+  completed Boolean  @default(false)
+  userId   String     // Идентификатор пользователя, связанного с игрой
+  user      User    @relation("UserGames", fields: [userId], references: [id]) // Связь с моделью User
 }
 
 enum UserRole {

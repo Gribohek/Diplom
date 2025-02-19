@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Cookies from "js-cookie"; // Импортируйте js-cookie
+import "./Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -95,9 +96,8 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <div>
+    <div className="registration-container">
+      <div className="registration-box">
         <h2>Регистрация</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>{success}</p>}
@@ -154,14 +154,7 @@ const Register = () => {
               required
             />
           </div>
-          <div>
-            <label>Роль:</label>
-            <select name="role" value={formData.role} onChange={handleChange}>
-              <option value="CHILD">Ребёнок</option>
-              <option value="THERAPIST">Терапевт</option>
-              <option value="ADMIN">Администратор</option>
-            </select>
-          </div>
+          <div></div>
           <button type="submit">Зарегистрироваться</button>
         </form>
       </div>

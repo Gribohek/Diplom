@@ -1,10 +1,8 @@
 // user.dto.ts
 export class UserDto {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   middleName: string;
-  title: string;
-  score: number;
   role: string; // Добавляем роль пользователя
 }

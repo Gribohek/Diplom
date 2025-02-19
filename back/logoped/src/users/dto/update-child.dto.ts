@@ -1,5 +1,6 @@
+import { UserRole } from '@prisma/client';
 // update-child.dto.ts
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsEnum } from 'class-validator';
 
 export class UpdateChildDto {
   @IsString()
@@ -13,4 +14,8 @@ export class UpdateChildDto {
   @IsString()
   @IsOptional()
   middleName?: string;
+
+  @IsString()
+  @IsOptional()
+  role?: any;
 }

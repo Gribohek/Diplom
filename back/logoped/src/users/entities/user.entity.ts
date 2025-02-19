@@ -1,6 +1,6 @@
-import { UserRole } from '@prisma/client';
 // user.entity.ts
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Game } from './game.entity';
 
 @Entity()
 export class User {
@@ -13,15 +13,15 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   middleName: string;
 
-  @Column()
-  role: string;
+  @Column({ unique: true })
+  username: string;
 
   @Column()
-  title: string;
+  password: string;
 
-  @Column()
-  score: number;
+  @OneToMany(() => Game, (game) => game.user)
+  games: Game[];
 }

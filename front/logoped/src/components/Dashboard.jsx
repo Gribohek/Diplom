@@ -12,9 +12,6 @@ const AdminDashboard = () => {
     firstName: "",
     lastName: "",
     middleName: "",
-    title: "",
-    score: 0,
-    completed: false,
   });
 
   useEffect(() => {
@@ -58,7 +55,7 @@ const AdminDashboard = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:4200/admin/children", {
+        const response = await fetch("http://localhost:4200/users/children", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -89,7 +86,7 @@ const AdminDashboard = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4200/admin/children/${id}`,
+        `http://localhost:4200/users/children/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -115,9 +112,6 @@ const AdminDashboard = () => {
       firstName: child.firstName,
       lastName: child.lastName,
       middleName: child.middleName,
-      title: child.title,
-      score: child.score,
-      completed: child.completed,
     });
   };
 
@@ -135,7 +129,7 @@ const AdminDashboard = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4200/admin/children/${editingChild.id}`,
+        `http://localhost:4200/users/children/${editingChild.id}`,
         {
           method: "PUT",
           headers: {
@@ -330,9 +324,14 @@ const AdminDashboard = () => {
                     <td>{child.lastName}</td>
                     <td>{child.firstName}</td>
                     <td>{child.middleName}</td>
-                    <td>{child.title ?? "-"}</td>
-                    <td>{child.score ?? 0}</td>
-                    <td>{child.completed ? "Да" : "Нет"}</td>
+                    <td>
+                      {child.games.map((game) => (
+                        <div key={game.id}>
+                          {game.title}: {game.score ?? 0} (
+                          {game.completed ? "Да" : "Нет"})
+                        </div>
+                      ))}
+                    </td>
                     <td>
                       <button onClick={() => handleEdit(child)}>
                         Редактировать
@@ -449,8 +448,6 @@ const AdminDashboard = () => {
                     <p>Фамилия: {userData.lastName}</p>
                     <p>Имя: {userData.firstName}</p>
                     <p>Отчество: {userData.middleName}</p>
-                    <p>Игра: {userData.title}</p>
-                    <p>Уровень: {userData.score}</p>
                     <button onClick={handleEditToggle}>Редактировать</button>
                     <button onClick={handleDeleteAccount}>
                       Удалить аккаунт

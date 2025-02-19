@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Cookies from "js-cookie"; // Импортируем библиотеку js-cookie
+import "./Login.css";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -45,26 +46,27 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <form onSubmit={handleSubmit}>
-        <input
-          name="username"
-          placeholder="Логин"
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Пароль"
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Войти</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}{" "}
-        {/* Отображение ошибки */}
-      </form>
+    <div className="auth-container">
+      <div className="auth-box">
+        <h2>Авторизация</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="username"
+            placeholder="Логин"
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Пароль"
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Войти</button>
+          {error && <p>{error}</p>} {/* Отображение ошибки */}
+        </form>
+      </div>
     </div>
   );
 };

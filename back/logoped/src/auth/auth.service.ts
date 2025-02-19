@@ -7,8 +7,8 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma.service';
 
 type AuthInput = { username: string; password: string };
-type SignInData = { id: number; username: string };
-type AuthResult = { accessToken: string; id: number; username: string };
+type SignInData = { id: string; username: string };
+type AuthResult = { accessToken: string; id: string; username: string };
 
 @Injectable()
 export class AuthService {
