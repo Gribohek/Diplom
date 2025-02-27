@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
+import Header from "../Header/Header";
+import "./Dashboard.css";
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState(null);
   const [editing, setEditing] = useState(false);
   const [children, setChildren] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
+  const [games, setGames] = useState([]);
   const [editingChild, setEditingChild] = useState(null);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -74,9 +80,36 @@ const AdminDashboard = () => {
       }
     };
 
-    fetchChildren();
+    const fetchData = async () => {
+      await fetchChildren(); // Получение данных пользователя
+    };
+    fetchData();
   }, []);
+  const fetchUserGames = async () => {
+    const token = Cookies.get("token");
 
+    try {
+      const response = await fetch("http://localhost:4200/users/game", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Не удалось получить данные об играх");
+      }
+
+      const data = await response.json();
+      setGames(data);
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+  useEffect(() => {
+    if (userData) {
+      fetchUserGames(); // Получение игр пользователя
+    }
+  }, [userData]);
   const handleDelete = async (id) => {
     const token = Cookies.get("token");
     if (!token) {
@@ -202,7 +235,14 @@ const AdminDashboard = () => {
       setError(e.message);
     }
   };
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
+  // Фильтрация детей по фамилии
+  const filteredChildren = children.filter((child) =>
+    child.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   const handleDeleteAccount = async () => {
     const token = Cookies.get("token");
 
@@ -245,50 +285,59 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <h1>Личный кабинет терапевта</h1>
+      <Header />
       {userData && userData.role === "THERAPIST" ? (
         <div className="user-info">
+          <h1>Личный кабинет терапевта</h1>
           {editing ? (
-            <form onSubmit={handleUpdate}>
-              <label>
-                Логин :
-                <input
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-              <label>
-                Фамилия:
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required // Сделаем обязательным
-                />
-              </label>
-              <label>
-                Имя:
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required // Сделаем обязательным
-                />
-              </label>
-              <label>
-                Отчество (необязательно):
-                <input
-                  type="text"
-                  name="middleName"
-                  value={formData.middleName}
-                  onChange={handleChange}
-                />
-              </label>
+            <form onSubmit={handleUpdate} className="edit-form">
+              <div className="form-field">
+                <label>
+                  Логин:
+                  <input
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+              </div>
+              <div className="form-field">
+                <label>
+                  Фамилия:
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+              </div>
+              <div className="form-field">
+                <label>
+                  Имя:
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+              </div>
+              <div className="form-field">
+                <label>
+                  Отчество (необязательно):
+                  <input
+                    type="text"
+                    name="middleName"
+                    value={formData.middleName}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
               <button type="submit">Сохранить</button>
               <button type="button" onClick={handleEditToggle}>
                 Отмена
@@ -300,8 +349,15 @@ const AdminDashboard = () => {
               <p>Фамилия: {userData.lastName}</p>
               <p>Имя: {userData.firstName}</p>
               <p>Отчество: {userData.middleName}</p>
+              <Link to="/register">Регистрация</Link>
               <button onClick={handleEditToggle}>Редактировать</button>
               <button onClick={handleDeleteAccount}>Удалить аккаунт</button>
+              <input
+                type="text"
+                placeholder="Поиск по фамилии"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
             </div>
           )}
           <h3>Дети:</h3>
@@ -312,27 +368,34 @@ const AdminDashboard = () => {
                 <th>Имя</th>
                 <th>Отчество</th>
                 <th>Название игры</th>
-                <th>Уровень</th>
+                <th>Очки</th>
                 <th>Завершено</th>
                 <th>Действия</th>
               </tr>
             </thead>
             <tbody>
-              {children.length > 0 ? (
-                children.map((child) => (
+              {filteredChildren.length > 0 ? (
+                filteredChildren.map((child) => (
                   <tr key={child.id}>
                     <td>{child.lastName}</td>
                     <td>{child.firstName}</td>
                     <td>{child.middleName}</td>
-                    <td>
-                      {child.games.map((game) => (
-                        <div key={game.id}>
-                          {game.title}: {game.score ?? 0} (
-                          {game.completed ? "Да" : "Нет"})
-                        </div>
-                      ))}
-                    </td>
-                    <td>
+                    {child.games.length > 0 ? (
+                      child.games.map((game) => (
+                        <React.Fragment key={game.id}>
+                          <td>{game.title ?? "игр нет"}</td>
+                          <td>{game.score ?? 0}</td>
+                          <td>{game.completed ? "Да" : "Нет"}</td>
+                        </React.Fragment>
+                      ))
+                    ) : (
+                      <>
+                        <td>игр нет</td>
+                        <td>0</td>
+                        <td>Нет</td>
+                      </>
+                    )}
+                    <td className="action-buttons">
                       <button onClick={() => handleEdit(child)}>
                         Редактировать
                       </button>
@@ -393,51 +456,59 @@ const AdminDashboard = () => {
         </div>
       ) : (
         <div>
-          <h1>Личный кабинет</h1>
           {userData &&
             userData.role === "CHILD" && ( // Отображаем только для роли "child"
               <div className="user-info">
+                <h1>Личный кабинет</h1>
                 {editing ? (
-                  <form onSubmit={handleUpdate}>
-                    <label>
-                      Логин :
-                      <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                      />
-                    </label>
-                    <label>
-                      Фамилия:
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        required // Сделаем обязательным
-                      />
-                    </label>
-                    <label>
-                      Имя:
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        required // Сделаем обязательным
-                      />
-                    </label>
-                    <label>
-                      Отчество (необязательно):
-                      <input
-                        type="text"
-                        name="middleName"
-                        value={formData.middleName}
-                        onChange={handleChange}
-                      />
-                    </label>
+                  <form onSubmit={handleUpdate} className="edit-form">
+                    <div className="form-field">
+                      <label>
+                        Логин:
+                        <input
+                          type="text"
+                          name="username"
+                          value={formData.username}
+                          onChange={handleChange}
+                          required
+                        />
+                      </label>
+                    </div>
+                    <div className="form-field">
+                      <label>
+                        Фамилия:
+                        <input
+                          type="text"
+                          name="lastName"
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </label>
+                    </div>
+                    <div className="form-field">
+                      <label>
+                        Имя:
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleChange}
+                          required
+                        />
+                      </label>
+                    </div>
+                    <div className="form-field">
+                      <label>
+                        Отчество (необязательно):
+                        <input
+                          type="text"
+                          name="middleName"
+                          value={formData.middleName}
+                          onChange={handleChange}
+                        />
+                      </label>
+                    </div>
                     <button type="submit">Сохранить</button>
                     <button type="button" onClick={handleEditToggle}>
                       Отмена
@@ -448,6 +519,23 @@ const AdminDashboard = () => {
                     <p>Фамилия: {userData.lastName}</p>
                     <p>Имя: {userData.firstName}</p>
                     <p>Отчество: {userData.middleName}</p>
+                    <div>
+                      <h2>Ваши игры:</h2>
+                      <ul>
+                        {games.map((game) => (
+                          <li key={game.id}>
+                            <h3>{game.title}</h3>
+                            <p>
+                              Счет:{" "}
+                              {game.score !== null
+                                ? game.score
+                                : "Не установлен"}
+                            </p>
+                            <p>Завершена: {game.completed ? "Да" : "Нет"}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                     <button onClick={handleEditToggle}>Редактировать</button>
                     <button onClick={handleDeleteAccount}>
                       Удалить аккаунт

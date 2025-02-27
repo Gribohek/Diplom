@@ -1,6 +1,6 @@
 // user.dto.ts
 export class UserDto {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   middleName: string;

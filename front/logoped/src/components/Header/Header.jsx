@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./HomePage.css";
+import "./Header.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie"; // Импорт библиотеки js-cookie
 
@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="logo" onClick={onLogoClick}>
-        Логотип
+        На главную
       </div>
       <nav className="nav">
         {!isAuthenticated && (

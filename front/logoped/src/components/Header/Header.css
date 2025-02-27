@@ -1,0 +1,52 @@
+/* Стили для заголовка */
+.header {
+  display: flex; /* Используем flexbox для выравнивания элементов */
+  justify-content: space-between; /* Распределяем пространство между логотипом и навигацией */
+  align-items: center; /* Центрируем элементы по вертикали */
+  padding: 15px 30px; /* Внутренние отступы */
+  background-color: #007bff; /* Фоновый цвет заголовка */
+  color: #ffffff; /* Цвет текста */
+}
+
+/* Стили для логотипа */
+.logo {
+  font-size: 1.5rem; /* Размер шрифта для логотипа */
+  font-weight: bold; /* Жирный шрифт */
+  cursor: pointer; /* Указатель при наведении */
+}
+
+/* Стили для навигации */
+.nav {
+  display: flex; /* Используем flexbox для навигационных ссылок */
+  gap: 15px; /* Отступы между ссылками */
+}
+
+/* Стили для ссылок */
+.nav a {
+  text-decoration: none; /* Убираем подчеркивание */
+  color: #ffffff; /* Цвет текста */
+  padding: 10px 15px; /* Внутренние отступы для ссылок */
+  border-radius: 5px; /* Скругленные углы */
+  transition: background-color 0.3s; /* Плавный переход для фона */
+}
+
+/* Эффект наведения для ссылок */
+.nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Цвет фона при наведении */
+}
+
+/* Стили для кнопки выхода */
+.nav button {
+  background-color: transparent; /* Прозрачный фон */
+  color: #ffffff; /* Цвет текста */
+  border: none; /* Убираем границу */
+  cursor: pointer; /* Указатель при наведении */
+  padding: 10px 15px; /* Внутренние отступы */
+  border-radius: 5px; /* Скругленные углы */
+  transition: background-color 0.3s; /* Плавный переход для фона */
+}
+
+/* Эффект наведения для кнопки выхода */
+.nav button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Цвет фона при наведении */
+}

@@ -2,7 +2,7 @@
 import { Game } from '../entities/game.entity';
 
 export class ChildWithGamesDto {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   middleName?: string;

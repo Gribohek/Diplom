@@ -1,0 +1,119 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.user-info {
+  background-color: white;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 900px; /* Максимальная ширина контейнера */
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px; /* Отступ между полями ввода */
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px; /* Отступ между кнопками */
+}
+
+button:hover {
+  background-color: #357ae8; /* Затемнение цвета при наведении */
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td {
+  background-color: #fff;
+}
+
+td button {
+  background-color: #e7e7e7; /* Цвет кнопок в таблице */
+  color: #333;
+}
+
+td button:hover {
+  background-color: #d7d7d7; /* Затемнение кнопок в таблице */
+}
+
+input[type="text"][placeholder] {
+  margin-bottom: 20px; /* Отступ снизу для поля поиска */
+  width: 30%; /* Поле ввода займет всю ширину */
+}
+action-buttons {
+  display: flex; /* Используем flexbox для выравнивания кнопок */
+  justify-content: space-between; /* Распределяем кнопки по всей ширине ячейки */
+  align-items: center; /* Центрируем кнопки по вертикали */
+}
+
+.action-buttons button {
+  margin-right: 5px; /* Отступ между кнопками */
+}
+.edit-form {
+  display: flex;
+  flex-direction: column; /* Располагаем поля по вертикали */
+  gap: 10px; /* Отступ между полями */
+}
+
+.form-field {
+  display: flex;
+  align-items: center; /* Центрируем элементы по вертикали */
+}
+
+.form-field label {
+  margin-right: 10px; /* Отступ между меткой и полем ввода */
+  flex: 0 0 150px; /* Фиксированная ширина для меток */
+}
+
+.form-field input {
+  flex: 1; /* Поля ввода занимают оставшееся пространство */
+}

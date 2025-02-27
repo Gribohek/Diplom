@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "./Header";
+import Header from "../Header/Header";
 import Cookies from "js-cookie"; // Импортируем библиотеку js-cookie
 import "./Login.css";
 
