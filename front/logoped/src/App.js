@@ -12,6 +12,8 @@ import Login from "./components/Login/Login";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Game from "./components/Game/Game";
 import BazaRechi from "./components/section1/BazaRechi.jsx";
+import Leksik from "./components/section2/Leksik.jsx";
+import Gramatik from "./components/section3/Gramatik.jsx";
 
 function App() {
   const handleLogoClick = () => {
@@ -27,8 +29,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/section1" element={<BazaRechi />} />
-        <Route path="/section2" element={<Game />} />
-        <Route path="/section3" element={<Game />} />
+        <Route path="/section2" element={<Leksik />} />
+        <Route path="/section3" element={<Gramatik />} />
         <Route path="/section4" element={<Game />} />
         <Route path="/section5" element={<Game />} />
         <Route path="/section6" element={<Game />} />

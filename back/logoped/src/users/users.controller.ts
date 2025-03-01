@@ -23,16 +23,19 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   async create(@Body() data: Omit<User, 'id'>) {
     return this.usersService.create(data);
   }
 
   @Get()
+  @UseGuards(AuthGuard('jwt'))
   async findAll() {
     return this.usersService.findAll();
   }
 
   @Post('register')
+  @UseGuards(AuthGuard('jwt'))
   async register(@Body() registerDto: RegisterDto) {
     const user = await this.usersService.createUser(registerDto);
     return { message: 'User registered successfully', userId: user.id };
@@ -62,10 +65,12 @@ export class UsersController {
     return this.usersService.updateUser(user.userId, updateData);
   }
   @Get('children')
+  @UseGuards(AuthGuard('jwt'))
   async getChildrenWithGames() {
     return this.usersService.findAllChildrenWithGames();
   }
   @Put('children/:id')
+  @UseGuards(AuthGuard('jwt'))
   async updateChild(
     @Param('id') id: string,
     @Body() updateChildDto: UpdateChildDto,
@@ -73,6 +78,7 @@ export class UsersController {
     return this.usersService.updateChild(id, updateChildDto);
   }
   @Delete('children/:id')
+  @UseGuards(AuthGuard('jwt'))
   async deleteChild(@Param('id') id: string) {
     return this.usersService.deleteChild(id);
   }

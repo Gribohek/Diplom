@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../HomePage/HomePage.css"; // Импортируем CSS для стилей
 import Header from "../Header/Header";
-import aktivnoeSlushanieImage from "../../data/assets/aktivnoe-slushanie-1.jpg";
 
 const BazaRechi = () => {
   return (
@@ -108,9 +107,6 @@ const BazaRechi = () => {
           эмоциях и ключевых моментах. Это упражнение развивает внимание и
           понимание эмоциональной окраски речи.
         </p>
-        <div>
-          <img src={aktivnoeSlushanieImage} alt="Активное слушание" />
-        </div>
         <h2> Игра с интонацией</h2>
         <p>
           {" "}

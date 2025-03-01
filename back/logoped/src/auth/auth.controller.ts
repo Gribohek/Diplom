@@ -19,6 +19,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @UseGuards(AuthGuard)
   login(@Body() input: { username: string; password: string }) {
     return this.authService.authenticate(input);
   }
@@ -29,10 +30,12 @@ export class AuthController {
     return request.user;
   }
   @Post('register')
+  @UseGuards(AuthGuard)
   async register(@Body() registerUserDto: RegisterUserDto) {
     return await this.authService.register(registerUserDto);
   }
   @Get('check-username')
+  @UseGuards(AuthGuard)
   async checkUsername(
     @Query('username') username: string,
   ): Promise<{ exists: boolean }> {

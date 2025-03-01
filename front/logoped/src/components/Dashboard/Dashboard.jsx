@@ -116,27 +116,27 @@ const AdminDashboard = () => {
       setError("Вы не авторизованы");
       return;
     }
+    if (window.confirm("Вы уверены, что хотите удалить аккаунт?"))
+      try {
+        const response = await fetch(
+          `http://localhost:4200/users/children/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-    try {
-      const response = await fetch(
-        `http://localhost:4200/users/children/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+        if (!response.ok) {
+          throw new Error("Не удалось удалить ребенка");
         }
-      );
 
-      if (!response.ok) {
-        throw new Error("Не удалось удалить ребенка");
+        // Обновляем список детей с удаленным ребенком
+        setChildren(children.filter((child) => child.id !== id));
+      } catch (e) {
+        setError(e.message);
       }
-
-      // Обновляем список детей с удаленным ребенком
-      setChildren(children.filter((child) => child.id !== id));
-    } catch (e) {
-      setError(e.message);
-    }
   };
 
   const handleEdit = (child) => {
@@ -179,8 +179,8 @@ const AdminDashboard = () => {
 
       // Обновляем список детей
       const updatedChild = await response.json();
-      setChildren(
-        children.map((child) =>
+      setChildren((prevChildren) =>
+        prevChildren.map((child) =>
           child.id === updatedChild.id ? updatedChild : child
         )
       );
@@ -229,7 +229,10 @@ const AdminDashboard = () => {
       }
 
       const updatedData = await response.json();
-      setUserData(updatedData);
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        ...updatedData,
+      }));
       setEditing(false);
     } catch (e) {
       setError(e.message);
@@ -240,8 +243,12 @@ const AdminDashboard = () => {
   };
 
   // Фильтрация детей по фамилии
-  const filteredChildren = children.filter((child) =>
-    child.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredChildren = children.filter(
+    (child) =>
+      child.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      child.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (child.middleName &&
+        child.middleName.toLowerCase().includes(searchTerm.toLowerCase()))
   );
   const handleDeleteAccount = async () => {
     const token = Cookies.get("token");
@@ -349,12 +356,15 @@ const AdminDashboard = () => {
               <p>Фамилия: {userData.lastName}</p>
               <p>Имя: {userData.firstName}</p>
               <p>Отчество: {userData.middleName}</p>
-              <Link to="/register">Регистрация</Link>
+
               <button onClick={handleEditToggle}>Редактировать</button>
               <button onClick={handleDeleteAccount}>Удалить аккаунт</button>
+              <div>
+                <Link to="/register">Заегистрировать нового ребенка</Link>
+              </div>
               <input
                 type="text"
-                placeholder="Поиск по фамилии"
+                placeholder="Поиск по ребекна"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />
@@ -375,39 +385,62 @@ const AdminDashboard = () => {
             </thead>
             <tbody>
               {filteredChildren.length > 0 ? (
-                filteredChildren.map((child) => (
-                  <tr key={child.id}>
-                    <td>{child.lastName}</td>
-                    <td>{child.firstName}</td>
-                    <td>{child.middleName}</td>
-                    {child.games.length > 0 ? (
-                      child.games.map((game) => (
-                        <React.Fragment key={game.id}>
-                          <td>{game.title ?? "игр нет"}</td>
-                          <td>{game.score ?? 0}</td>
-                          <td>{game.completed ? "Да" : "Нет"}</td>
-                        </React.Fragment>
-                      ))
-                    ) : (
-                      <>
-                        <td>игр нет</td>
-                        <td>0</td>
-                        <td>Нет</td>
-                      </>
-                    )}
-                    <td className="action-buttons">
-                      <button onClick={() => handleEdit(child)}>
-                        Редактировать
-                      </button>
-                      <button onClick={() => handleDelete(child.id)}>
-                        Удалить
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                filteredChildren.map((child) =>
+                  child.games.length > 0 ? (
+                    child.games.map((game, index) => (
+                      <tr key={game.id}>
+                        {index === 0 && (
+                          <>
+                            <td rowSpan={child.games.length}>
+                              {child.lastName}
+                            </td>
+                            <td rowSpan={child.games.length}>
+                              {child.firstName}
+                            </td>
+                            <td rowSpan={child.games.length}>
+                              {child.middleName}
+                            </td>
+                          </>
+                        )}
+                        <td>{game.title ?? "игр нет"}</td>
+                        <td>{game.score ?? 0}</td>
+                        <td>{game.completed ? "Да" : "Нет"}</td>
+
+                        {index === 0 && (
+                          <td
+                            rowSpan={child.games.length}
+                            className="action-buttons"
+                          >
+                            <button onClick={() => handleEdit(child)}>
+                              Редактировать
+                            </button>
+                            <button onClick={() => handleDelete(child.id)}>
+                              Удалить
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    ))
+                  ) : (
+                    <tr key={child.id}>
+                      <td>{child.lastName}</td>
+                      <td>{child.firstName}</td>
+                      <td>{child.middleName}</td>
+                      <td colSpan={3}>Игры отсутствуют</td>
+                      <td>
+                        <button onClick={() => handleEdit(child)}>
+                          Редактировать
+                        </button>
+                        <button onClick={() => handleDelete(child.id)}>
+                          Удалить
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                )
               ) : (
                 <tr>
-                  <td colSpan="7">Нет данных о детях.</td>
+                  <td colSpan={7}>Нет данных для отображения</td>
                 </tr>
               )}
             </tbody>
@@ -416,36 +449,42 @@ const AdminDashboard = () => {
           {editingChild && (
             <div>
               <h3>Редактировать ребенка</h3>
-              <form onSubmit={handleSubmit}>
-                <label>
-                  Имя:
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Фамилия:
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </label>
-                <label>
-                  Отчество:
-                  <input
-                    type="text"
-                    name="middleName"
-                    value={formData.middleName}
-                    onChange={handleFormChange}
-                  />
-                </label>
+              <form onSubmit={handleSubmit} className="edit-form">
+                <div className="form-field">
+                  <label>
+                    Имя:
+                    <input
+                      type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleFormChange}
+                      required
+                    />
+                  </label>
+                </div>
+                <div className="form-field">
+                  <label>
+                    Фамилия:
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleFormChange}
+                      required
+                    />
+                  </label>
+                </div>
+                <div className="form-field">
+                  <label>
+                    Отчество:
+                    <input
+                      type="text"
+                      name="middleName"
+                      value={formData.middleName}
+                      onChange={handleFormChange}
+                    />
+                  </label>
+                </div>
                 <button type="submit">Сохранить</button>
                 <button type="button" onClick={handleCancel}>
                   Отмена

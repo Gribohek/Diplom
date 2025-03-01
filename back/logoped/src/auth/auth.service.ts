@@ -29,9 +29,10 @@ export class AuthService {
 
     return null;
   }
+
   async validateUser(input: AuthInput) {
     const user = await this.userService.findUserByName(input.username);
-    if (user && user.password == input.password) {
+    if (user && (await bcrypt.compare(input.password, user.password))) {
       return {
         id: user.id,
         username: user.username,
@@ -48,9 +49,13 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(tokenPayLoad);
     return { accessToken, username: user.username, id: user.id };
   }
+
   async register(registerUserDto: RegisterUserDto) {
     const { firstName, lastName, middleName, username, password, role } =
       registerUserDto;
+
+    // Хешируем пароль
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 - это количество раундов хеширования
 
     const newUser = await this.prisma.user.create({
       data: {
@@ -58,13 +63,14 @@ export class AuthService {
         lastName,
         middleName,
         username,
-        password: password,
+        password: hashedPassword, // Сохраняем хешированный пароль
         role,
       },
     });
 
     return newUser;
   }
+
   async checkUsername(username: string): Promise<boolean> {
     const user = await this.prisma.user.findFirst({ where: { username } });
     return !!user; // Возвращаем true, если пользователь найден

@@ -47,6 +47,7 @@ const Login = () => {
 
   return (
     <div className="auth-container">
+      <Header />
       <div className="auth-box">
         <h2>Авторизация</h2>
         <form onSubmit={handleSubmit}>

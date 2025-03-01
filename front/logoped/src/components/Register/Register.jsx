@@ -97,6 +97,7 @@ const Register = () => {
 
   return (
     <div className="registration-container">
+      <Header />
       <div className="registration-box">
         <h2>Регистрация</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
