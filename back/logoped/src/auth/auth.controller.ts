@@ -30,12 +30,10 @@ export class AuthController {
     return request.user;
   }
   @Post('register')
-  @UseGuards(AuthGuard)
   async register(@Body() registerUserDto: RegisterUserDto) {
     return await this.authService.register(registerUserDto);
   }
   @Get('check-username')
-  @UseGuards(AuthGuard)
   async checkUsername(
     @Query('username') username: string,
   ): Promise<{ exists: boolean }> {

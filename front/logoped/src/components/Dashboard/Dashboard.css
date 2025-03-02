@@ -47,6 +47,9 @@ button {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+.export {
+  margin-top: 10px;
+}
 
 button:hover {
   background-color: #357ae8; /* Затемнение цвета при наведении */

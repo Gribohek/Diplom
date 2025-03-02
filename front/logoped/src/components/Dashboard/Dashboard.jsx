@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import "./Dashboard.css";
+import * as XLSX from "xlsx";
 
 const AdminDashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -281,6 +282,68 @@ const AdminDashboard = () => {
       }
     }
   };
+  function exportToXLSX() {
+    const data = [];
+    const headers = [
+      "Фамилия",
+      "Имя",
+      "Отчество",
+      "Название игры",
+      "Очки",
+      "Завершено",
+    ];
+
+    // Добавим заголовки
+    data.push(headers);
+
+    filteredChildren.forEach((child) => {
+      if (child.games.length > 0) {
+        child.games.forEach((game, index) => {
+          if (index === 0) {
+            // Добавляем информацию о ребенке для первой игры
+            data.push([
+              child.lastName,
+              child.firstName,
+              child.middleName,
+              game.title || "игр нет",
+              game.score || 0,
+              game.completed ? "Да" : "Нет",
+            ]);
+          } else {
+            // Для остальных игр добавляем только данные об игре
+            data.push([
+              "", // Фамилия
+              "", // Имя
+              "", // Отчество
+              game.title || "игр нет",
+              game.score || 0,
+              game.completed ? "Да" : "Нет",
+            ]);
+          }
+        });
+      } else {
+        // Если у ребенка нет игр
+        data.push([
+          child.lastName,
+          child.firstName,
+          child.middleName,
+          "Игры отсутствуют",
+          "",
+          "",
+        ]);
+      }
+    });
+
+    // Создаем лист и книгу
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Отчет");
+
+    // Экспортируем в Excel
+    XLSX.writeFile(wb, "report.xlsx");
+  }
+
+  // Кнопка для вызова функции
 
   if (loading) {
     return <div>Загрузка...</div>;
@@ -445,7 +508,9 @@ const AdminDashboard = () => {
               )}
             </tbody>
           </table>
-
+          <button className="export" onClick={exportToXLSX}>
+            Экспортировать в XLSX
+          </button>
           {editingChild && (
             <div>
               <h3>Редактировать ребенка</h3>
