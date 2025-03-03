@@ -3,8 +3,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../HomePage/HomePage.css"; // Импортируем CSS для стилей
 import Header from "../Header/Header";
-import aktivnoeSlushanieImage from "../../data/assets/aktivnoe-slushanie-1.jpg";
-import intinatsia from "../../data/assets/257446_original.jpg";
+import aktivnoeSlushanieImage from "../../data/assets/BazaRechi/aktivnoe-slushanie-1.jpg";
+import intinatsia from "../../data/assets/BazaRechi/257446_original.jpg";
+import association from "../../data/assets/BazaRechi/13-e1621419208505.png";
+import bear from "../../data/assets/BazaRechi/flrfwszhwew.jpg";
+import kykla from "../../data/assets/BazaRechi/l_ftcycamme.jpg";
+import dog from "../../data/assets/BazaRechi/mwmxt_logvo.jpg";
+import star from "../../data/assets/BazaRechi/nxe_t1glm8o.jpg";
+import park from "../../data/assets/BazaRechi/tf_lsus9l5g.jpg";
+import bee from "../../data/assets/BazaRechi/v1y9box10ns.jpg";
 
 const BazaRechi = () => {
   return (
@@ -39,7 +46,7 @@ const BazaRechi = () => {
         </ul>
       </aside>
       <main className="main-content">
-        <h1> Общая информация на тему психологическая база речи</h1>
+        <h1> Психологическая база речи</h1>
         <p>
           Психологическая база речи — это совокупность психических процессов и
           механизмов, которые обеспечивают формирование, восприятие и понимание
@@ -132,15 +139,10 @@ const BazaRechi = () => {
           не возникнет пауза. Это упражнение развивает креативное мышление и
           помогает улучшить скорость реакции в разговоре.
         </p>
-        <h2> Ролевые игры</h2>
-        <p>
-          {" "}
-          Разработайте сценарии различных социальных ситуаций (например,
-          собеседование, деловая встреча, неформальная беседа). Партнеры по
-          очереди играют роли, стараясь адаптировать свою речь в зависимости от
-          контекста и отношений между собеседниками. Это упражнение помогает
-          развивать гибкость в общении и понимание социальных норм.
-        </p>
+        <div class="image-container">
+          <img src={association} alt="Словесные ассоциации" />
+        </div>
+
         <h2>Чтение вслух</h2>
         <p>
           {" "}
@@ -150,6 +152,24 @@ const BazaRechi = () => {
           упражнение помогает развивать выразительность речи и понимание
           эмоционального контекста.
         </p>
+        <div class="image-container">
+          <img src={bear} alt="Словесные ассоциации" />
+        </div>
+        <div class="image-container">
+          <img src={kykla} alt="Словесные ассоциации" />
+        </div>
+        <div class="image-container">
+          <img src={dog} alt="Словесные ассоциации" />
+        </div>
+        <div class="image-container">
+          <img src={star} alt="Словесные ассоциации" />
+        </div>
+        <div class="image-container">
+          <img src={park} alt="Словесные ассоциации" />
+        </div>
+        <div class="image-container">
+          <img src={bee} alt="Словесные ассоциации" />
+        </div>
       </main>
     </div>
   );

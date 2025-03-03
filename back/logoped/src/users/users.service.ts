@@ -109,6 +109,7 @@ export class UsersService {
 
     return children.map((child) => ({
       id: child.id,
+      userName: child.username,
       firstName: child.firstName,
       lastName: child.lastName,
       middleName: child.middleName,
@@ -116,11 +117,12 @@ export class UsersService {
     }));
   }
   async updateChild(id: string, updateChildDto: UpdateChildDto) {
-    await this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where: { id },
       data: updateChildDto,
     });
-    return {};
+    console.log(await this.findAllChildrenWithGames());
+    return await this.findAllChildrenWithGames();
   }
 
   async deleteChild(id: string): Promise<void> {

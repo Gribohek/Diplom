@@ -180,12 +180,8 @@ const AdminDashboard = () => {
 
       // Обновляем список детей
       const updatedChild = await response.json();
-      setChildren((prevChildren) =>
-        prevChildren.map((child) =>
-          child.id === updatedChild.id ? updatedChild : child
-        )
-      );
-      setEditingChild(null); // Закрываем форму редактирования
+      setChildren(updatedChild);
+      setEditingChild(null);
     } catch (e) {
       setError(e.message);
     }

@@ -37,7 +37,7 @@ const Login = () => {
         navigate("/");
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Неверный логин или пароль");
+        setError("Неверный логин или пароль");
       }
     } catch (error) {
       setError("Ошибка сети. Попробуйте снова.");

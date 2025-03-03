@@ -5,6 +5,10 @@ import { IsString, IsOptional, IsEnum } from 'class-validator';
 export class UpdateChildDto {
   @IsString()
   @IsOptional()
+  username?: string;
+
+  @IsString()
+  @IsOptional()
   firstName?: string;
 
   @IsString()
