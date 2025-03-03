@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../HomePage/HomePage.css"; // Импортируем CSS для стилей
 import Header from "../Header/Header";
+import ReactPlayer from "react-player";
 
 const ObychenieGramote = () => {
   return (
@@ -37,7 +38,7 @@ const ObychenieGramote = () => {
         </ul>
       </aside>
       <main className="main-content">
-        <h1> Общая информация на тему обучение грамоте</h1>
+        <h1> Обучение грамоте</h1>
         <p>
           Обучение грамоте – это овладение умением читать и писать тексты,
           излагать свои мысли в письменной форме, понимать при чтении не только
@@ -59,6 +60,12 @@ const ObychenieGramote = () => {
           слух. Подготовка детей по данному направлению позволит минимизировать
           трудности при овладении грамотой в первый год пребывания в школе.
         </p>
+        <div>
+          <ReactPlayer
+            url="https://rutube.ru/video/5164396ea335f9ea994a1d512e9edd2c/?&utm_source=embed&utm_medium=referral&utm_campaign=logo&utm_content=5164396ea335f9ea994a1d512e9edd2c&utm_term=yastatic.net%2F&referrer=appmetrica_tracking_id%3D1037600761300671389%26ym_tracking_id%3D8208261370490023513https://www.youtube.com/watch?v=B5RCByS_hF4"
+            width="600px"
+          />
+        </div>
         <h1>Причеры упражениний</h1>
 
         <h2> Игра «Угадай звук»</h2>

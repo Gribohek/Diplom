@@ -16,6 +16,8 @@ import Leksik from "./components/section2/Leksik.jsx";
 import Gramatik from "./components/section3/Gramatik.jsx";
 import Svjaz from "./components/section4/Svjaz.jsx";
 import ObychenieGramote from "./components/section5/ObychenieGramote.jsx";
+import Zvuk from "./components/section6/Zvuk.jsx";
+import Motorika from "./components/section7/Motorika.jsx";
 
 function App() {
   const handleLogoClick = () => {
@@ -35,8 +37,8 @@ function App() {
         <Route path="/section3" element={<Gramatik />} />
         <Route path="/section4" element={<Svjaz />} />
         <Route path="/section5" element={<ObychenieGramote />} />
-        <Route path="/section6" element={<Game />} />
-        <Route path="/section7" element={<Game />} />
+        <Route path="/section6" element={<Zvuk />} />
+        <Route path="/section7" element={<Motorika />} />
         <Route path="/section8" element={<Game />} />
       </Routes>
     </BrowserRouter>

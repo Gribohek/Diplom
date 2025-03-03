@@ -121,7 +121,6 @@ export class UsersService {
       where: { id },
       data: updateChildDto,
     });
-    console.log(await this.findAllChildrenWithGames());
     return await this.findAllChildrenWithGames();
   }
 

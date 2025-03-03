@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../HomePage/HomePage.css"; // Импортируем CSS для стилей
 import Header from "../Header/Header";
+import ReactPlayer from "react-player";
 
 const Leksik = () => {
   return (
@@ -37,7 +38,7 @@ const Leksik = () => {
         </ul>
       </aside>
       <main className="main-content">
-        <h1> Общая информация на тему развитие лексической стороны речи</h1>
+        <h1> Развитие лексической стороны речи</h1>
         <p>
           Работа над словом - исходной единицей языка - занимает одно из самых
           важных мест в общей системе работы по развитию речи.
@@ -80,7 +81,12 @@ const Leksik = () => {
           семантическое поле: шить - зашивать - вышивать - платье - рубашка -
           узор - острая - тупая и т.д.
         </p>
-
+        <div>
+          <ReactPlayer
+            url="https://www.youtube.com/watch?v=zn-WjcBSCyA&ab_channel=%D0%9E%D0%9A%2C%D0%9C%D0%90%D0%9C%21-%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D1%8B%D0%B4%D0%BB%D1%8F%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D1%8F%D1%80%D0%B5%D1%87%D0%B8"
+            width="600px"
+          />
+        </div>
         <h1>
           Упражнения и игры, направленные на расширение активного и пассивного
           словаря детей

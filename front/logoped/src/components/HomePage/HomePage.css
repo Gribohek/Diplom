@@ -121,3 +121,11 @@ body {
   max-width: 100%; /* Устанавливает максимальную ширину изображения */
   height: auto; /* Автоматически подстраивает высоту */
 }
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем по горизонтали */
+  justify-content: center; /* Центрируем по вертикали, если нужно */
+  text-align: center; /* Центрируем текст */
+  margin: 20px; /* Отступы вокруг контейнера */
+}
