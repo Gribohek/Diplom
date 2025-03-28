@@ -104,16 +104,6 @@ const Register = () => {
         {success && <p style={{ color: "green" }}>{success}</p>}
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Имя:</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div>
             <label>Фамилия:</label>
             <input
               type="text"
@@ -123,6 +113,17 @@ const Register = () => {
               required
             />
           </div>
+          <div>
+            <label>Имя:</label>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
           <div>
             <label>Отчество:</label>
             <input

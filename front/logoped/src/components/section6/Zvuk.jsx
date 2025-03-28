@@ -83,7 +83,7 @@ const Zvuk = () => {
         <h1>Примеры упражениний</h1>
 
         <div className="audio-container">
-          <h2>Звук А</h2>
+          <h2>Песенка про звуки</h2>
           <audio controls>
             <source src={audioFile} type="audio/mpeg" />
             Ваш браузер не поддерживает элемент audio.

@@ -82,4 +82,9 @@ export class UsersController {
   async deleteChild(@Param('id') id: string) {
     return this.usersService.deleteChild(id);
   }
+  @Get(':username')
+  @UseGuards(AuthGuard('jwt'))
+  async findUserByName(@Param('username') username: string): Promise<User> {
+    return this.usersService.findUserByName(username);
+  }
 }

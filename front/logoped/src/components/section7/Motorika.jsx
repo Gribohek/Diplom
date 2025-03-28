@@ -100,5 +100,4 @@ const Motorika = () => {
     </div>
   );
 };
-
 export default Motorika;

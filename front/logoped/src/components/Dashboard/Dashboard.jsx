@@ -419,7 +419,7 @@ const AdminDashboard = () => {
               <button onClick={handleEditToggle}>Редактировать</button>
               <button onClick={handleDeleteAccount}>Удалить аккаунт</button>
               <div>
-                <Link to="/register">Заегистрировать нового ребенка</Link>
+                <Link to="/register">Зарегистрировать нового ребенка</Link>
               </div>
               <input
                 type="text"
