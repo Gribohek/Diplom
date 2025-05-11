@@ -1,66 +1,98 @@
 /* Стиль для общего контейнера */
 .auth-container {
   display: flex;
-  justify-content: center; /* Центрирует содержимое по горизонтали */
-  align-items: center; /* Центрирует содержимое по вертикали */
-  min-height: 100vh; /* Минимальная высота 100% высоты экрана */
-  background-color: #e6f7ff; /* Лёгкий фоновый цвет */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff5e6; /* Теплый кремовый фон вместо холодного голубого */
+  background-image: radial-gradient(
+      circle at 20% 30%,
+      #ffd166 0%,
+      transparent 25%
+    ),
+    radial-gradient(circle at 80% 70%, #06d6a0 0%, transparent 25%);
 }
 
 /* Стиль для окна формы */
 .auth-box {
-  background-color: white; /* Белый фон */
-  border-radius: 10px; /* Скругленные углы */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для глубины */
-  padding: 20px; /* Внутренние отступы */
-  width: 300px; /* Ширина окна */
+  background-color: #ffffff;
+  border-radius: 16px; /* Больше скругление для дружелюбного вида */
+  box-shadow: 0 8px 32px rgba(255, 159, 67, 0.2); /* Более мягкая тень с оранжевым оттенком */
+  padding: 30px;
+  width: 320px; /* Немного шире */
+  border: 2px solid #ffd166; /* Желтая рамка */
 }
 
 /* Заголовок формы */
 .auth-box h2 {
-  text-align: center; /* Центровать заголовок */
-  color: #4285f4; /* Цвет заголовка */
+  text-align: center;
+  color: #ff9f43; /* Теплый оранжевый вместо синего */
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Общий стиль для меток и полей ввода */
 .auth-box label {
-  margin-top: 10px;
-  display: block; /* Метки на новой строке */
+  margin-top: 15px;
+  display: block;
+  color: #5f6c7b; /* Мягкий серо-голубой */
+  font-weight: 500;
 }
 
 /* Стиль для полей ввода и селектов */
 .auth-box input {
-  width: 90%; /* Поля ввода занимают 100% ширины родительского блока */
-  padding: 10px; /* Внутренние отступы */
-  margin-top: 5px; /* Отступ сверху */
-  margin-bottom: 15px; /* Отступ снизу для большей визуальной разделенности */
-  border: 1px solid #ccc; /* Цвет рамки */
-  border-radius: 5px; /* Скругленные углы */
-  font-size: 1em; /* Размер шрифта */
+  width: 90%;
+  padding: 12px 15px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px; /* Больше скругление */
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  background-color: #f8fafc;
+}
+
+.auth-box input:focus {
+  border-color: #ff9f43;
+  box-shadow: 0 0 0 3px rgba(255, 159, 67, 0.2);
+  outline: none;
 }
 
 /* Стиль для кнопки */
 .auth-box button {
-  background-color: #4285f4; /* Цвет кнопки */
-  color: white; /* Цвет текста на кнопке */
-  border: none; /* Убирает рамку */
-  border-radius: 5px; /* Скругленные углы */
-  padding: 10px; /* Внутренние отступы */
-  margin-top: 15px; /* Отступ сверху */
-  cursor: pointer; /* Курсор при наведении */
-  width: 100%; /* Кнопка занимает 100% ширины */
-  font-size: 1em; /* Размер шрифта */
-  transition: background-color 0.3s ease; /* Плавный переход для фона */
+  background-color: #ff9f43;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(255, 159, 67, 0.3);
 }
 
 /* Эффект при наведении на кнопку */
 .auth-box button:hover {
-  background-color: #357ae8; /* Темный оттенок при наведении */
+  background-color: #ff8a1c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 159, 67, 0.4);
+}
+
+.auth-box button:active {
+  transform: translateY(0);
 }
 
 /* Стиль для сообщения об ошибке */
 .auth-box p {
-  text-align: center; /* Централизовать сообщения */
-  margin: 10px 0; /* Вертикальные отступы */
-  color: red; /* Цвет для ошибок */
+  text-align: center;
+  margin: 15px 0;
+  color: #ef476f; /* Яркий розовый для ошибок */
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgba(239, 71, 111, 0.1);
 }

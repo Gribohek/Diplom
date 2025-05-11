@@ -1,9 +1,7 @@
-/* HomePage.css */
-
 body {
-  background-color: #f0f8ff; /* Светлый фон */
-  font-family: "Comic Sans MS", cursive, sans-serif; /* Игровой шрифт */
-  color: #333; /* Темный текст для контраста */
+  background-color: #f0f9ff; /* Мягкий голубой фон (как небо) */
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: #2d3748; /* Темно-серый текст для лучшей читаемости */
   margin: 0;
   padding: 0;
 }
@@ -14,118 +12,157 @@ body {
   min-height: 100vh;
 }
 
-/* Стили для боковой панели */
+/* Боковая панель */
 .sidebar {
-  width: 250px; /* Ширина боковой панели */
-  background-color: #f8f9fa; /* Фоновый цвет */
-  padding: 20px; /* Отступы вокруг содержимого */
-  position: fixed; /* Фиксировать панель слева */
-  top: 50%; /* Центрирование по вертикали */
-  transform: translateY(
-    -50%
-  ); /* Смещение на половину высоты для точного центрирования */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Тень для создания эффекта глубины */
-  overflow-y: auto; /* Прокрутка, если содержимое превышает высоту */
+  width: 250px;
+  background-color: #ff9f1c; /* Теплый оранжевый */
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
-/* Стили для меню */
+/* Меню */
 .menu {
-  list-style-type: none; /* Убираем маркеры списка */
-  padding: 0; /* Убираем отступы */
-  margin: 0; /* Убираем поля */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Стили для пунктов меню */
 .menu li {
-  margin: 10px 0; /* Отступы между пунктами */
+  margin: 12px 0;
 }
 
-/* Стили для ссылок */
 .menu a {
-  text-decoration: none; /* Убираем подчеркивание */
-  color: #343a40; /* Цвет текста */
-  padding: 10px 15px; /* Отступы внутри ссылки */
-  display: block; /* Делаем ссылку блочным элементом для удобного клика */
-  border-radius: 5px; /* Скругленные углы */
-  transition: background-color 0.3s, color 0.3s; /* Плавный переход для фона и цвета текста */
+  text-decoration: none;
+  color: #ffffff;
+  padding: 12px 16px;
+  display: block;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.15);
+  font-size: 1.1rem;
 }
 
-/* Эффект наведения */
 .menu a:hover {
-  background-color: #e9ecef; /* Цвет фона при наведении */
-  color: #007bff; /* Цвет текста при наведении */
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
 }
 
-/* Стили для активной ссылки */
 .menu a.active {
-  background-color: #007bff; /* Цвет фона для активного состояния */
-  color: #ffffff; /* Цвет текста для активной ссылки */
-}
-.main-content {
-  max-width: 800px; /* Максимальная ширина контента */
-  margin: 20px auto; /* Центрирование контента с отступом сверху и снизу */
-  padding: 20px; /* Внутренние отступы */
-  background-color: #ffffff; /* Фоновый цвет для контента */
-  border-radius: 8px; /* Скругленные углы */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тень для создания глубины */
+  background-color: #2ec4b6; /* Изумрудный для активного элемента */
+  font-weight: bold;
 }
 
-/* Стили для заголовков */
+/* Основной контент */
+.main-content {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Заголовки */
 .main-content h1 {
-  font-size: 2.5rem; /* Размер шрифта для заголовка 1 уровня */
-  color: #333333; /* Цвет текста */
-  margin-bottom: 15px; /* Отступ снизу */
+  font-size: 2.5rem;
+  color: #ff9f1c; /* Оранжевый */
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .main-content h2 {
-  font-size: 1.8rem; /* Размер шрифта для заголовка 2 уровня */
-  color: #007bff; /* Цвет текста для заголовка 2 уровня */
-  margin-top: 20px; /* Отступ сверху */
-  margin-bottom: 10px; /* Отступ снизу */
-  border-bottom: 2px solid #e9ecef; /* Нижняя граница для большего акцента */
-  padding-bottom: 5px; /* Отступ снизу для заголовка */
+  font-size: 1.8rem;
+  color: #2ec4b6; /* Изумрудный */
+  margin-top: 25px;
+  margin-bottom: 15px;
+  border-bottom: 3px solid #e2f3fb;
+  padding-bottom: 8px;
 }
 
-/* Стили для параграфов */
+/* Текст */
 .main-content p {
-  font-size: 1rem; /* Размер шрифта для параграфов */
-  line-height: 1.6; /* Высота строки для лучшей читабельности */
-  color: #555555; /* Цвет текста */
-  margin-bottom: 15px; /* Отступ снизу между параграфами */
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #4a5568;
+  margin-bottom: 20px;
 }
 
-/* Стили для выделения важных моментов */
+/* Выделение */
 .main-content .highlight {
-  background-color: #fff3cd; /* Фон для выделения */
-  color: #856404; /* Цвет текста для выделенного текста */
-  padding: 5px 10px; /* Отступы для выделенного текста */
-  border-radius: 4px; /* Скругленные углы */
-  display: inline-block; /* Вводим блоковый формат для выделенного текста */
+  background-color: #e2f3fb; /* Светло-голубой */
+  color: #2b6cb0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  border-left: 4px solid #2ec4b6;
 }
-/* Header.css */
+
+/* Шапка */
 .header {
-  position: absolute; /* Позволяет разместить элемент в произвольном месте */
-  top: 20px; /* Отступ от верхней границы */
-  right: 20px; /* Отступ от правой границы */
-  background-color: #ffcc00; /* Фон заголовка */
-  padding: 10px 20px; /* Отступы внутри заголовка */
-  border-radius: 5px; /* Закругленные углы */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для эффекта */
-  z-index: 1000; /* Убедитесь, что заголовок поверх других элементов */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #2ec4b6; /* Изумрудный */
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  z-index: 1000;
+  color: white;
+  font-weight: bold;
 }
+
+/* Изображения */
 .image-container {
-  text-align: center; /* Центрирует изображение горизонтально */
+  text-align: center;
+  margin: 25px 0;
 }
 
 .image-container img {
-  max-width: 100%; /* Устанавливает максимальную ширину изображения */
-  height: auto; /* Автоматически подстраивает высоту */
+  max-width: 100%;
+  height: auto;
+  border: 4px solid #ff9f1c;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Видео */
 .video-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем по горизонтали */
-  justify-content: center; /* Центрируем по вертикали, если нужно */
-  text-align: center; /* Центрируем текст */
-  margin: 20px; /* Отступы вокруг контейнера */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 25px;
+  background-color: #e2f3fb;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px dashed #2ec4b6;
+}
+
+/* Кнопки (добавлен новый стиль) */
+.button {
+  background-color: #ff9f1c;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #ffb347;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.button:active {
+  transform: translateY(0);
 }
