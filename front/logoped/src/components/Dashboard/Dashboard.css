@@ -1,123 +1,177 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif;
+  background-color: #fff5f0; /* Теплый персиковый фон */
   margin: 0;
   padding: 0;
+  background-image: radial-gradient(
+      circle at 10% 20%,
+      rgba(255, 204, 153, 0.2) 0%,
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(153, 204, 255, 0.2) 0%,
+      transparent 25%
+    );
 }
 
 .user-info {
-  background-color: white;
+  background-color: #ffffff;
   margin: 20px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  max-width: 900px; /* Максимальная ширина контейнера */
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(255, 153, 51, 0.15);
+  max-width: 900px;
+  border: 3px solid #ffcc99;
 }
 
 h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #ff6600;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 form {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 label {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-weight: bold;
+  color: #5f6c7b;
+  font-size: 1.1rem;
 }
 
 input[type="text"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 20px; /* Отступ между полями ввода */
+  padding: 12px;
+  border: 2px solid #ffcc99;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  background-color: #fff9f2;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #ff9933;
+  box-shadow: 0 0 0 3px rgba(255, 153, 51, 0.2);
+  outline: none;
+  background-color: #ffffff;
 }
 
 button {
-  padding: 10px 15px;
-  background-color: #4285f4;
+  padding: 12px 20px;
+  background: linear-gradient(to right, #ff9966, #ff6600);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
   margin-right: 10px;
   margin-bottom: 10px;
-}
-.export {
-  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.3);
 }
 
 button:hover {
-  background-color: #357ae8; /* Затемнение цвета при наведении */
+  background: linear-gradient(to right, #ff8844, #ff5500);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.4);
+}
+
+.export {
+  margin-top: 15px;
 }
 
 h3 {
   margin-top: 30px;
+  color: #ff6600;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ffcc99;
+  padding-bottom: 8px;
 }
 
 table {
-  width: 90%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 25px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 th,
 td {
-  padding: 10px;
-  border: 1px solid #ddd;
+  padding: 12px 15px;
+  border: 1px solid #ffe5cc;
   text-align: left;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: #ff9933;
+  color: white;
+  font-weight: bold;
 }
 
 td {
-  background-color: #fff;
+  background-color: #fff9f2;
 }
 
 td button {
-  background-color: #e7e7e7; /* Цвет кнопок в таблице */
-  color: #333;
+  background: linear-gradient(to right, #66bb6a, #44aa44);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-right: 5px;
 }
 
 td button:hover {
-  background-color: #d7d7d7; /* Затемнение кнопок в таблице */
+  background: linear-gradient(to right, #55aa55, #339933);
 }
 
 input[type="text"][placeholder] {
-  margin-bottom: 20px; /* Отступ снизу для поля поиска */
-  width: 30%; /* Поле ввода займет всю ширину */
-}
-action-buttons {
-  display: flex; /* Используем flexbox для выравнивания кнопок */
-  justify-content: space-between; /* Распределяем кнопки по всей ширине ячейки */
-  align-items: center; /* Центрируем кнопки по вертикали */
+  margin-bottom: 20px;
+  width: 50%;
 }
 
-.action-buttons button {
-  margin-right: 5px; /* Отступ между кнопками */
+.action-buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
 }
+
 .edit-form {
   display: flex;
-  flex-direction: column; /* Располагаем поля по вертикали */
-  gap: 10px; /* Отступ между полями */
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  background-color: #fff9f2;
+  border-radius: 12px;
 }
 
 .form-field {
   display: flex;
-  align-items: center; /* Центрируем элементы по вертикали */
+  align-items: center;
 }
 
 .form-field label {
-  margin-right: 10px; /* Отступ между меткой и полем ввода */
-  flex: 0 0 150px; /* Фиксированная ширина для меток */
+  margin-right: 15px;
+  flex: 0 0 150px;
+  color: #5f6c7b;
 }
 
 .form-field input {
-  flex: 1; /* Поля ввода занимают оставшееся пространство */
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ffcc99;
+  border-radius: 8px;
+  background-color: #ffffff;
 }

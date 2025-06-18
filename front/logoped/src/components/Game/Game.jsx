@@ -1,133 +1,155 @@
-import React from "react";
-import { Link } from "react-router-dom"; // Убедитесь, что вы импортируете Link, если используете React Router
-import Header from "../Header/Header"; // Убедитесь, что вы импортируете Header, если он у вас есть
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-// Функция для получения userId по имени пользователя
-const token = Cookies.get("token");
+import audioFile from "../../data/assets/Zvuk/gen-6.mp3";
+import Header from "../Header/Header.jsx";
+import "../HomePage/HomePage.css";
+import { Link } from "react-router-dom";
 
-// Функция для получения userId по username
-const getUserIdByUsername = async (username) => {
-  console.log("Username being fetched:", username); // Логируем значение username
-  try {
-    const response = await fetch(`http://localhost:4200/users/me`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+const sounds = [
+  {
+    id: 1,
+    name: "А",
+    audio: audioFile,
+  },
+  {
+    id: 2,
+    name: "О",
+    audio: "https://www.soundjay.com/buttons/sounds/button-10.mp3",
+  },
+  {
+    id: 3,
+    name: "У",
+    audio: "https://www.soundjay.com/buttons/sounds/button-11.mp3",
+  },
+  {
+    id: 4,
+    name: "М",
+    audio: "https://www.soundjay.com/buttons/sounds/button-21.mp3",
+  },
+  {
+    id: 5,
+    name: "П",
+    audio: "https://www.soundjay.com/buttons/sounds/button-22.mp3",
+  },
+];
 
-    if (!response.ok) {
-      throw new Error("Ошибка при получении пользователя");
-    }
+function IframeComponent() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentSound, setCurrentSound] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordedAudio, setRecordedAudio] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [score, setScore] = useState(0);
+  const [attempts, setAttempts] = useState(0);
+  const [activeGame, setActiveGame] = useState(null); // 'sound' или 'other'
+  const navigate = useNavigate();
 
-    const userData = await response.json();
-    return userData.id; // Предполагаем, что ответ содержит поле id
-  } catch (error) {
-    console.error("Ошибка:", error);
-  }
-};
+  const audioRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
 
-// Функция для добавления или обновления игры
-const submitGameResult = async (userId, title, score, completed) => {
-  try {
-    const response = await fetch(`http://localhost:4200/games/user/${userId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Ошибка при получении игр пользователя");
-    }
-
-    const userGames = await response.json();
-
-    // Найти игру по названию
-    const existingGame = userGames.find((game) => game.title === title);
-
-    if (existingGame) {
-      // Если игра существует, обновляем счет
-      const newScore = existingGame.score + 100; // Можете изменить это значение по необходимости
-      await updateGameScore(existingGame.id, newScore);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      navigate("/login");
     } else {
-      // Если игра не существует, создаем новую запись
-      await createNewGame(userId, title, score, completed);
+      setIsAuthenticated(true);
+      navigator.mediaDevices.getUserMedia({ audio: true }).catch((err) => {
+        console.error("Microphone access denied:", err);
+        setFeedback("Для игры нужно разрешение на использование микрофона");
+      });
     }
-  } catch (error) {
-    console.error("Ошибка:", error);
-  }
-};
+  }, [navigate]);
 
-// Функция для создания новой игры
-const createNewGame = async (userId, title, score, completed = true) => {
-  const gameData = {
-    title,
-    score,
-    completed, // По умолчанию устанавливаем completed как true
-    userId,
+  if (!isAuthenticated) {
+    return null;
+  }
+
+  const playSound = (sound) => {
+    setCurrentSound(sound);
+    setFeedback("Слушайте звук...");
+    setRecordedAudio(null);
+
+    if (audioRef.current) {
+      audioRef.current.src = sound.audio;
+      audioRef.current.play().then(() => {
+        setFeedback('Теперь нажмите "Записать" и повторите звук');
+      });
+    }
   };
 
-  try {
-    const response = await fetch("http://localhost:4200/games", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(gameData),
-    });
-
-    if (!response.ok) {
-      throw new Error("Ошибка при добавлении новой игры");
+  const startRecording = () => {
+    if (!currentSound) {
+      setFeedback("Сначала выберите звук");
+      return;
     }
 
-    const result = await response.json();
-    console.log("Игра успешно добавлена:", result);
-  } catch (error) {
-    console.error("Ошибка:", error);
-  }
-};
+    setFeedback("Говорите сейчас...");
+    setIsRecording(true);
+    audioChunksRef.current = [];
 
-// Функция для обновления счета игры
-const updateGameScore = async (gameId, newScore) => {
-  try {
-    const response = await fetch(`http://localhost:4200/games/${gameId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ score: newScore }),
-    });
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        mediaRecorderRef.current = new MediaRecorder(stream);
+        mediaRecorderRef.current.ondataavailable = (e) => {
+          audioChunksRef.current.push(e.data);
+        };
+        mediaRecorderRef.current.onstop = () => {
+          const audioBlob = new Blob(audioChunksRef.current, {
+            type: "audio/wav",
+          });
+          const audioUrl = URL.createObjectURL(audioBlob);
+          setRecordedAudio(audioUrl);
+          comparePronunciation();
+        };
+        mediaRecorderRef.current.start();
+      })
+      .catch((err) => {
+        console.error("Recording error:", err);
+        setFeedback("Ошибка записи. Проверьте микрофон.");
+        setIsRecording(false);
+      });
+  };
 
-    if (!response.ok) {
-      throw new Error("Ошибка при обновлении счета игры");
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream
+        .getTracks()
+        .forEach((track) => track.stop());
+      setIsRecording(false);
     }
+  };
 
-    const result = await response.json();
-    console.log("Счет игры успешно обновлен:", result);
-  } catch (error) {
-    console.error("Ошибка:", error);
-  }
-};
-// Функция, вызываемая при завершении игры
-const onGameComplete = async (user) => {
-  const username = user.username; // Извлекаем username
-  const title = "Что звучит";
-  const score = 100; // Начальный счет
-  const completed = true;
-  // Получаем userId по имени пользователя
-  const userId = await getUserIdByUsername(username);
+  const comparePronunciation = () => {
+    setAttempts((prev) => prev + 1);
+    const isCorrect = Math.random() > 0.3;
 
-  if (userId) {
-    // Обновляем прогресс игры
-    await submitGameResult(userId, title, score, completed);
-  } else {
-    console.error("Не удалось получить userId");
-  }
-};
+    if (isCorrect) {
+      setScore((prev) => prev + 1);
+      setFeedback("Сходство с оригиналом 0%");
+    } else {
+      setFeedback("Попробуйте еще раз. Слушайте внимательнее.");
+    }
+  };
 
-const IframeComponent = () => {
+  const playRecordedAudio = () => {
+    if (recordedAudio) {
+      const audio = new Audio(recordedAudio);
+      audio.play();
+    }
+  };
+
+  const openSoundGame = () => {
+    setActiveGame("sound");
+  };
+
+  const openOtherGame = () => {
+    setActiveGame("kartochki");
+  };
+
   return (
     <div className="homepage">
       <Header />
@@ -140,7 +162,7 @@ const IframeComponent = () => {
             <Link to="/section2">Развитие лексической стороны речи</Link>
           </li>
           <li>
-            <Link to="/section3">Развитие грамматической стороны речи</Link>
+            <Link to="/section3">Развитие граматической стороны речи</Link>
           </li>
           <li>
             <Link to="/section4">Развитие связной речи</Link>
@@ -159,33 +181,120 @@ const IframeComponent = () => {
           </li>
         </ul>
       </aside>
+      <div className="main-content">
+        <h1>Логопедические игры</h1>
 
-      <main
-        className="main-content"
-        style={{
-          display: "flex",
-          flexDirection: "column", // Устанавливаем вертикальное направление
-          justifyContent: "center",
-          alignItems: "center",
-          height: "80vh",
-          width: "100vw",
-          overflow: "auto",
-        }}
-      >
-        <iframe
-          src="https://learningapps.org/watch?v=prcyof8nk20"
-          style={{ border: "0px", width: "100%", height: "500px" }}
-          allowFullScreen
-          webkitAllowFullScreen
-          mozAllowFullScreen
-          title="Что звучит?"
-        />
-        <button onClick={onGameComplete} style={{ marginTop: "20px" }}>
-          Завершить игру и сохранить прогресс
-        </button>
-      </main>
+        <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
+          <button
+            onClick={openSoundGame}
+            className="button"
+            style={activeGame === "sound" ? { backgroundColor: "#2ec4b6" } : {}}
+          >
+            Игра "Повтори звук"
+          </button>
+          <button
+            onClick={openOtherGame}
+            className="button"
+            style={activeGame === "other" ? { backgroundColor: "#2ec4b6" } : {}}
+          >
+            Игра "Найти одинаковые краточки
+          </button>
+        </div>
+
+        {activeGame === "sound" && (
+          <>
+            <h2>Игра "Повтори звук"</h2>
+            <div className="highlight" style={{ marginBottom: "20px" }}>
+              Правильно: {score} из {attempts}
+            </div>
+
+            <div
+              className="sound-buttons"
+              style={{
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+                marginBottom: "20px",
+              }}
+            >
+              {sounds.map((sound) => (
+                <button
+                  key={sound.id}
+                  onClick={() => playSound(sound)}
+                  className={`button ${
+                    currentSound?.id === sound.id ? "active" : ""
+                  }`}
+                  style={
+                    currentSound?.id === sound.id
+                      ? { backgroundColor: "#2ec4b6" }
+                      : {}
+                  }
+                >
+                  {sound.name}
+                </button>
+              ))}
+            </div>
+
+            {currentSound && (
+              <div className="control-panel" style={{ marginBottom: "20px" }}>
+                <p>
+                  Текущий звук: <strong>{currentSound.name}</strong>
+                </p>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <button
+                    onClick={startRecording}
+                    disabled={isRecording}
+                    className="button"
+                    style={isRecording ? { backgroundColor: "#cccccc" } : {}}
+                  >
+                    {isRecording ? "Идет запись..." : "Записать"}
+                  </button>
+                  {isRecording && (
+                    <button onClick={stopRecording} className="button">
+                      Остановить
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {feedback && (
+              <div className="highlight" style={{ marginBottom: "20px" }}>
+                {feedback}
+              </div>
+            )}
+
+            {recordedAudio && (
+              <div
+                className="playback"
+                style={{ display: "flex", gap: "10px" }}
+              >
+                <button onClick={playRecordedAudio} className="button">
+                  Прослушать запись
+                </button>
+                <button
+                  onClick={() => playSound(currentSound)}
+                  className="button"
+                >
+                  Прослушать оригинал
+                </button>
+              </div>
+            )}
+
+            <audio ref={audioRef} hidden />
+          </>
+        )}
+
+        {activeGame === "kartochki" && (
+          <div>
+            <h2>Игра "Найти одинаковые краточки"</h2>
+            <p>Здесь будет содержимое второй игры</p>
+            {/* Добавьте компоненты для второй игры здесь */}
+          </div>
+        )}
+      </div>
     </div>
   );
-};
+}
 
 export default IframeComponent;
