@@ -1,0 +1,101 @@
+/* Стили для игры "Карточки" */
+.game-container {
+  background-color: #d0e0e6;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-container .cards {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(4, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.game-container .card {
+  height: 150px;
+  width: 150px;
+  border-radius: 8px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.game-container .card.flipped .inner {
+  transform: rotateY(180deg);
+}
+
+.game-container .inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: 0.6s cubic-bezier(0.38, 0.02, 0.98, 1) all;
+}
+
+.game-container .card .front,
+.game-container .card .back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.game-container .card .front {
+  border: 2px solid #d9d91d;
+  background: #fff;
+  transform: rotateY(180deg);
+}
+
+.game-container .card .back {
+  background: #e3b039;
+  font-size: 180px;
+  transition: 0.3s ease all;
+}
+
+.game-container .card .back:hover {
+  background: #dba8b1;
+  transform: scale(1.02);
+}
+
+.game-container .button-restart {
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #eabd55;
+  border: none;
+  color: #2d3748;
+  transition: all 0.3s ease;
+}
+
+.game-container .button-restart:hover {
+  background: #dba8b1;
+  transform: scale(1.02);
+}
+
+.game-container .gamezover {
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #eabd55;
+  color: #2d3748;
+  text-align: center;
+}
+
+.game-container .hidengamezover {
+  visibility: hidden;
+}

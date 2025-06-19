@@ -5,6 +5,7 @@ import audioFile from "../../data/assets/Zvuk/gen-6.mp3";
 import Header from "../Header/Header.jsx";
 import "../HomePage/HomePage.css";
 import { Link } from "react-router-dom";
+import Kartochki from "./Gamekartochki.jsx";
 
 const sounds = [
   {
@@ -289,7 +290,7 @@ function IframeComponent() {
           <div>
             <h2>Игра "Найти одинаковые краточки"</h2>
             <p>Здесь будет содержимое второй игры</p>
-            {/* Добавьте компоненты для второй игры здесь */}
+            <Kartochki />
           </div>
         )}
       </div>
