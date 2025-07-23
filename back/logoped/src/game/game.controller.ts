@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get, Param, Put } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Put, Patch } from '@nestjs/common';
 import { GameService } from './game.service';
 import { Game } from './game.model'; // Импортируйте вашу модель Game
 import { UpdateGameDto } from './dto/update-game.dto';
+
 @Controller('games')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
@@ -19,6 +20,13 @@ export class GameController {
   async updateGame(
     @Param('gameId') gameId: string,
     @Body() updateGameDto: UpdateGameDto,
+  ) {
+    return this.gameService.updateGame(gameId, updateGameDto);
+  }
+  @Patch(':gameId')
+  async partialUpdateGame(
+    @Param('gameId') gameId: string,
+    @Body() updateGameDto,
   ) {
     return this.gameService.updateGame(gameId, updateGameDto);
   }

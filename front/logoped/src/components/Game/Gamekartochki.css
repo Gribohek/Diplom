@@ -1,43 +1,33 @@
-/* Стили для игры "Карточки" */
-.game-container {
-  background-color: #d0e0e6;
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 20px;
+.ntcontainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
 }
-
-.game-container .cards {
+.okcards {
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(4, 1fr);
   gap: 10px;
-  margin: 20px 0;
 }
 
-.game-container .card {
+.epcard {
   height: 150px;
   width: 150px;
-  border-radius: 8px;
+  border-radius: 2px;
   cursor: pointer;
-  perspective: 1000px;
 }
-
-.game-container .card.flipped .inner {
+.epcard.ggflipped .orinner {
   transform: rotateY(180deg);
 }
 
-.game-container .inner {
+.orinner {
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
   transition: 0.6s cubic-bezier(0.38, 0.02, 0.98, 1) all;
 }
-
-.game-container .card .front,
-.game-container .card .back {
+.epcard .pbfront,
+.epcard .ekback {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,52 +40,43 @@
   backface-visibility: hidden;
 }
 
-.game-container .card .front {
+.epcard .pbfront {
   border: 2px solid #d9d91d;
   background: #fff;
   transform: rotateY(180deg);
 }
 
-.game-container .card .back {
+.epcard .ekback {
   background: #e3b039;
   font-size: 180px;
   transition: 0.3s ease all;
 }
 
-.game-container .card .back:hover {
+.epcard .ekback:hover,
+.button-restart:hover {
   background: #dba8b1;
   transform: scale(1.02);
 }
 
-.game-container .button-restart {
+.rtbutton-restart {
   cursor: pointer;
   margin-top: 15px;
   font-weight: bold;
   font-size: 20px;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 10px;
   background: #eabd55;
-  border: none;
-  color: #2d3748;
-  transition: all 0.3s ease;
+  transform: 0.3s ease all;
 }
 
-.game-container .button-restart:hover {
-  background: #dba8b1;
-  transform: scale(1.02);
-}
-
-.game-container .gamezover {
+.gamezover {
   margin-top: 15px;
   font-weight: bold;
   font-size: 20px;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 10px;
   background: #eabd55;
-  color: #2d3748;
-  text-align: center;
 }
-
-.game-container .hidengamezover {
+.hidengamezover {
   visibility: hidden;
 }

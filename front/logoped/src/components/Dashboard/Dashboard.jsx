@@ -352,6 +352,34 @@ const AdminDashboard = () => {
   return (
     <div>
       <Header />
+      <aside className="sidebar">
+        <ul className="menu">
+          <li>
+            <Link to="/section1">Психологическая база речи</Link>
+          </li>
+          <li>
+            <Link to="/section2">Развитие лексической стороны речи</Link>
+          </li>
+          <li>
+            <Link to="/section3">Развитие граматической стороны речи</Link>
+          </li>
+          <li>
+            <Link to="/section4">Развитие связной речи</Link>
+          </li>
+          <li>
+            <Link to="/section5">Обучение грамоте</Link>
+          </li>
+          <li>
+            <Link to="/section6">Звукопроизношение</Link>
+          </li>
+          <li>
+            <Link to="/section7">Мелкая моторика</Link>
+          </li>
+          <li>
+            <Link to="/section8">Игры и игровые упражнения</Link>
+          </li>
+        </ul>
+      </aside>
       {userData && userData.role === "THERAPIST" ? (
         <div className="user-info">
           <h1>Личный кабинет терапевта</h1>
@@ -430,16 +458,16 @@ const AdminDashboard = () => {
             </div>
           )}
           <h3>Дети:</h3>
-          <table>
+          <table className="compact-table">
             <thead>
               <tr>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Отчество</th>
-                <th>Название игры</th>
-                <th>Очки</th>
-                <th>Завершено</th>
-                <th>Действия</th>
+                <th className="col-name">Фамилия</th>
+                <th className="col-name">Имя</th>
+                <th className="col-name">Отчество</th>
+                <th className="col-game">Игра</th>
+                <th className="col-score">Очки</th>
+                <th className="col-status">Статус</th>
+                <th className="col-actions">Действия</th>
               </tr>
             </thead>
             <tbody>
@@ -450,56 +478,73 @@ const AdminDashboard = () => {
                       <tr key={game.id}>
                         {index === 0 && (
                           <>
-                            <td rowSpan={child.games.length}>
+                            <td
+                              rowSpan={child.games.length}
+                              className="col-name"
+                            >
                               {child.lastName}
                             </td>
-                            <td rowSpan={child.games.length}>
+                            <td
+                              rowSpan={child.games.length}
+                              className="col-name"
+                            >
                               {child.firstName}
                             </td>
-                            <td rowSpan={child.games.length}>
+                            <td
+                              rowSpan={child.games.length}
+                              className="col-name"
+                            >
                               {child.middleName}
                             </td>
                           </>
                         )}
-                        <td>{game.title ?? "игр нет"}</td>
-                        <td>{game.score ?? 0}</td>
-                        <td>{game.completed ? "Да" : "Нет"}</td>
+                        <td className="col-game">{game.title ?? "—"}</td>
+                        <td className="col-score">{game.score ?? 0}</td>
+                        <td className="col-status">
+                          {game.completed ? "✓" : "✗"}
+                        </td>
 
                         {index === 0 && (
                           <td
                             rowSpan={child.games.length}
-                            className="action-buttons"
+                            className="col-actions"
                           >
-                            <button onClick={() => handleEdit(child)}>
-                              Редактировать
-                            </button>
-                            <button onClick={() => handleDelete(child.id)}>
-                              Удалить
-                            </button>
+                            <div className="action-buttons">
+                              <button onClick={() => handleEdit(child)}>
+                                Ред.
+                              </button>
+                              <button onClick={() => handleDelete(child.id)}>
+                                Удал.
+                              </button>
+                            </div>
                           </td>
                         )}
                       </tr>
                     ))
                   ) : (
                     <tr key={child.id}>
-                      <td>{child.lastName}</td>
-                      <td>{child.firstName}</td>
-                      <td>{child.middleName}</td>
-                      <td colSpan={3}>Игры отсутствуют</td>
-                      <td>
-                        <button onClick={() => handleEdit(child)}>
-                          Редактировать
-                        </button>
-                        <button onClick={() => handleDelete(child.id)}>
-                          Удалить
-                        </button>
+                      <td className="col-name">{child.lastName}</td>
+                      <td className="col-name">{child.firstName}</td>
+                      <td className="col-name">{child.middleName}</td>
+                      <td colSpan={3} className="col-game">
+                        Нет игр
+                      </td>
+                      <td className="col-actions">
+                        <div className="action-buttons">
+                          <button onClick={() => handleEdit(child)}>
+                            Ред.
+                          </button>
+                          <button onClick={() => handleDelete(child.id)}>
+                            Удал.
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   )
                 )
               ) : (
                 <tr>
-                  <td colSpan={7}>Нет данных для отображения</td>
+                  <td colSpan={7}>Нет данных</td>
                 </tr>
               )}
             </tbody>
